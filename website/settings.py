@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     # "core, apps.",
     "sslserver",
+    'chat',
+    'logio'
 ]
 
 MIDDLEWARE = [
