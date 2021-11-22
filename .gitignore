@@ -8,3 +8,5 @@ SK.txt
 db.sqlite3
 DbCreds.txt
 bibl
+chat/migrations/
+logio/migrations/

@@ -1,10 +1,12 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from pathlib import Path
-from core.forms import SignUpForm
+from core.forms import SignUpForm   
 
+
+@user_passes_test(lambda u: u.is_anonymous, redirect_field_name='home')
 def loginToAcc(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -19,12 +21,12 @@ def loginToAcc(request):
     return render(request, "logio/login.html", {"form": form})
 
 
-@login_required()
 def logoutFromAcc(request):
     logout(request)
     return redirect("start")
 
 
+@user_passes_test(lambda u: u.is_anonymous, redirect_field_name='home')
 def signup(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)

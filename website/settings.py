@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     # "core, apps.",
     "sslserver",
     'chat',
-    'logio'
+    'logio',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +88,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "website.wsgi.application"
+ASGI_APPLICATION = "website.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -185,7 +199,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = Path(BASE_DIR / "static")
 
-LOGIN_URL = "base"
-LOGOUT_URL = "base"
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "login"
+LOGIN_URL = "start"
+LOGOUT_URL = "start"
+LOGIN_REDIRECT_URL = "start"
+LOGOUT_REDIRECT_URL = "start"
