@@ -1,7 +1,12 @@
 .idea
 core/__pycache__
 website/__pycache__
+chat/__pycache__
+logio/__pycache__
 venv
 SK.txt
 db.sqlite3
 DbCreds.txt
+bibl
+chat/migrations/
+logio/migrations/
