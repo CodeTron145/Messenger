@@ -1,0 +1,52 @@
+version: '3.3'
+
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    command: daphne -b 0.0.0.0 -p 8000 website.asgi:application
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env.prod
+    # depends_on:
+    #   - db
+    networks: 
+      - webnet
+      - redisnet
+    links:
+      - redis
+      - db
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+    networks:
+      - webnet
+      - redisnet
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    networks:
+      - webnet
+    ports:
+      - 1488:80
+  redis:
+    image: redis:alpine
+    networks: 
+      - redisnet
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+networks: 
+  webnet:
+  redisnet:
