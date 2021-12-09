@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
-import django
 import sys
+
+# run with python3 manage.py runsslserver 8080
 
 
 def main():
@@ -20,5 +21,4 @@ def main():
 
 
 if __name__ == '__main__':
-    django.setup()
     main()

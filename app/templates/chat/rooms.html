@@ -39,8 +39,18 @@
                 	<button id="room-name-submit" style="background: #330570; border-radius: 8px; 
                 		color: #FFFFFF;">Submit</button>
           		</div>
+
   			</div>
   		</div>
+        <div style="margin: 25px; margin-left: 75px;font-size: 25px;">
+            {% for user in users %}
+                <div style="padding-top: 15px; padding-bottom: 15px;background: #2222; border-radius: 15px; margin-bottom: 15px; width: 90%">
+                    <div style="margin-left: 10px; display: flex; justify-content: space-between;">
+                        <a>{{ user.username }}</a> <br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
   	</div>
 
   	<script>

@@ -16,8 +16,8 @@ from pathlib import Path
 # with(open("FBCreds.txt")) as file:
 #     fb = file.read().split(sep=";")
 
-# with(open("SK.txt")) as file:
-#     key = file.read().split(sep=";")[0]
+with(open("SK.txt")) as file:
+    key = file.read().split(sep=";")[0]
 
 # with(open("DbCreds.txt")) as file:
 #     string = file.read().split("\n")
@@ -32,19 +32,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = int(os.environ.get("DEBUG", default=0))
+SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +54,7 @@ INSTALLED_APPS = [
     "sslserver",
     'chat',
     'logio',
-    'website',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -90,14 +87,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "wsgi.application"
-ASGI_APPLICATION = "website.routing.application"
+WSGI_APPLICATION = "website.wsgi.application"
+ASGI_APPLICATION = "website.asgi.application"
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)],
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
@@ -200,10 +197,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles" 
-
-MEDIA_URL = "/media/"
-# MEDIA_ROOT = BASE_DIR / "mediafiles"
+STATIC_ROOT = Path(BASE_DIR / "static")
 
 LOGIN_URL = "start"
 LOGOUT_URL = "start"
