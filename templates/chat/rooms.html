@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+  	<div style="margin-left: 250px; margin-right: 250px; display: flex; justify-content: space-between; font-family: 'Noto Sans';">
+  		<div style="width: 65%; float:left; margin-top: 50px; margin-right: 100px;">
+  			<div style="font-size: 30px;">
+  				<label>List of rooms</label>
+  			</div>
+
+  			<div style="height: 650px; overflow-y: scroll; background: #2222; border-radius: 20px">
+  				<div style="margin: 25px; margin-left: 75px;font-size: 25px;">
+					{% for m in rooms %}
+						<div style="padding-top: 15px; padding-bottom: 15px;background: #2222; border-radius: 15px; margin-bottom: 15px; width: 90%">
+							<div style="margin-left: 10px; display: flex; justify-content: space-between;">
+								<a>{{ m.room }}</a>
+								<div style="margin-right: 50px;">
+									<button style="border-radius: 20px;" onclick="window.location='{{ m.room }}'">Connect</button>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+  				</div>
+  			</div>
+  		</div>
+
+  		<div style="margin-top: 50px;width: 40%; background: #996AD6;float:right; border-radius: 30px; height: 300px;">
+  			<div style="text-align: center;">
+  				<a style="font-size: 30px;">Create room</a>
+  			</div>
+
+  			<div style="margin: 50px; font-size: 25px;">
+  				<label>Room name</label>
+              	<div>
+                	<input type="text" placeholder="Room name" id="room-name-input">
+              	</div>
+
+              	<div style="margin-top: 40px;">
+                	<button id="room-name-submit" style="background: #330570; border-radius: 8px; 
+                		color: #FFFFFF;">Submit</button>
+          		</div>
+
+  			</div>
+  		</div>
+        <div style="margin: 25px; margin-left: 75px;font-size: 25px;">
+            {% for user in users %}
+                <div style="padding-top: 15px; padding-bottom: 15px;background: #2222; border-radius: 15px; margin-bottom: 15px; width: 90%">
+                    <div style="margin-left: 10px; display: flex; justify-content: space-between;">
+                        <a>{{ user.username }}</a> <br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+  	</div>
+
+  	<script>
+		document.querySelector('#room-name-input').focus();
+
+		document.querySelector('#room-name-input').onkeyup = function(e) {
+			if (e.keyCode === 13) {
+				document.querySelector('#room-name-submit').click();
+			}
+		};
+
+		document.querySelector('#room-name-submit').onclick = function(e) {
+		  	var roomName = document.querySelector('#room-name-input').value;
+
+		  	if (roomName.length != 0)
+		  	{
+	  			window.location.replace(roomName);
+			}
+		};
+    </script>
+{% endblock %}
